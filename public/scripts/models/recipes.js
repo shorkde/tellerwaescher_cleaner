@@ -29,7 +29,7 @@
         return $.ajax(_.extend(params, options));
       }
     });
-    return window.IngredientModel = Backbone.Model.extend({
+    window.IngredientModel = Backbone.Model.extend({
       initialize: function() {
         return console.log("recipe model init");
       },
@@ -40,6 +40,36 @@
           response.picture = "images/default.png";
         }
         return response;
+      }
+    });
+    window.NutritionModel = Backbone.Model.extend({
+      initialize: function() {
+        return console.log("nutr model init");
+      }
+    });
+    window.EANModel = Backbone.Model.extend({
+      initialize: function() {
+        return console.log("ean model init");
+      }
+    });
+    window.CatModel = Backbone.Model.extend({
+      initialize: function() {
+        return console.log("cat model init");
+      }
+    });
+    window.sendNutrModel = Backbone.Model.extend({
+      initialize: function() {
+        return console.log("sendNutrModel init");
+      }
+    });
+    window.sendEANModel = Backbone.Model.extend({
+      initialize: function() {
+        return console.log("sendEANModel init");
+      }
+    });
+    return window.sendCatsModel = Backbone.Model.extend({
+      initialize: function() {
+        return console.log("sendCatsModel init");
       }
     });
   });

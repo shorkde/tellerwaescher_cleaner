@@ -5,12 +5,13 @@
     window.FilterView = Backbone.View.extend({
       id: "FilterView",
       events: {
-        'keyup input#searchForm': 'keyLog'
+        'keyup input': 'keyLog'
       },
       initialize: function() {
-        return _.bindAll(this, 'render', 'getData');
+        return _.bindAll(this, 'render', 'getData', 'keyLog');
       },
       keyLog: function() {
+        console.log("keylog");
         if (typeof this.keyTimeout !== "undefined") {
           window.clearTimeout(this.keyTimeout);
         }
@@ -76,14 +77,186 @@
       showDetails: function() {
         $('table#IngrResults tr').removeClass("active");
         $(this.el).addClass("active");
-        this.recipeDetailView = new IngrDetailView({
+        this.ingrDetailView = new IngrDetailView({
           model: this.model
         });
-        return $('#container').html(this.recipeDetailView.render().el);
+        return $('#container').html(this.ingrDetailView.render().el);
       }
     });
-    return window.IngrDetailView = Backbone.View.extend({
-      template: Utility.create_template("#IngredientDetailView-template"),
+    window.IngrDetailView = Backbone.View.extend({
+      className: "row-fluid",
+      initialize: function() {
+        _.bindAll(this, 'render');
+        this.nutritionListView = new NutritionsView({
+          collection: new NutritionsCollection()
+        });
+        this.EANListView = new EANView({
+          collection: new EANCollection()
+        });
+        this.CatsListView = new CatsView({
+          collection: new CatsCollection()
+        });
+        this.sendNutr = new sendNutrModel;
+        this.sendEAN = new sendEANModel;
+        return this.sendCats = new sendCatsModel;
+      },
+      render: function() {
+        $(this.el).append(this.nutritionListView.render().el);
+        $(this.el).append(this.EANListView.render().el);
+        $(this.el).append(this.CatsListView.render().el);
+        this.nutritionListView.collection.query.searchstring = this.model.get("title");
+        this.EANListView.collection.query.searchstring = this.model.get("title");
+        this.nutritionListView.collection.fetch();
+        this.EANListView.collection.fetch();
+        this.CatsListView.collection.fetch();
+        return this;
+      }
+    });
+    window.NutritionsView = Backbone.View.extend({
+      id: "Nutritions",
+      className: "span4",
+      initialize: function() {
+        _.bindAll(this, 'render');
+        this.filterView = new FilterView({
+          collection: this.collection
+        });
+        return this.listView = new NutritionsListView({
+          collection: this.collection
+        });
+      },
+      render: function() {
+        $(this.el).append("<h2>Nährwerte</h2>");
+        $(this.el).append(this.filterView.render().el);
+        $(this.el).append(this.listView.render().el);
+        return this;
+      }
+    });
+    window.NutritionsListView = Backbone.View.extend({
+      tagName: "table",
+      className: "table table-striped table-bordered",
+      id: "NutritionsResults",
+      initialize: function() {
+        _.bindAll(this, 'render');
+        return this.collection.bind("reset", this.render);
+      },
+      render: function() {
+        console.log("render nutr");
+        $(this.el).html("");
+        this.collection.each(function(item) {
+          var nutrition;
+          nutrition = new NutritionsListElementView({
+            model: item
+          });
+          return $("table#NutritionsResults").append(nutrition.render().el);
+        });
+        return this;
+      }
+    });
+    window.NutritionsListElementView = Backbone.View.extend({
+      template: Utility.create_template("#NutritionsListViewElement-template"),
+      tagName: "tr",
+      initialize: function() {
+        return _.bindAll(this, 'render');
+      },
+      render: function() {
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this;
+      }
+    });
+    window.EANView = Backbone.View.extend({
+      id: "EAN",
+      className: "span4",
+      initialize: function() {
+        _.bindAll(this, 'render');
+        this.filterView = new FilterView({
+          collection: this.collection
+        });
+        return this.listView = new EANListView({
+          collection: this.collection
+        });
+      },
+      render: function() {
+        $(this.el).append("<h2>EAN</h2>");
+        $(this.el).append(this.filterView.render().el);
+        $(this.el).append(this.listView.render().el);
+        return this;
+      }
+    });
+    window.EANListView = Backbone.View.extend({
+      tagName: "table",
+      className: "table table-striped table-bordered",
+      id: "EANResults",
+      initialize: function() {
+        _.bindAll(this, 'render');
+        return this.collection.bind("reset", this.render);
+      },
+      render: function() {
+        console.log("render nutr");
+        $(this.el).html("");
+        this.collection.each(function(item) {
+          var ean;
+          ean = new EANListElementView({
+            model: item
+          });
+          return $("table#EANResults").append(ean.render().el);
+        });
+        return this;
+      }
+    });
+    window.EANListElementView = Backbone.View.extend({
+      template: Utility.create_template("#EANListViewElement-template"),
+      tagName: "tr",
+      initialize: function() {
+        return _.bindAll(this, 'render');
+      },
+      render: function() {
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this;
+      }
+    });
+    window.CatsView = Backbone.View.extend({
+      id: "Cats",
+      className: "span4",
+      initialize: function() {
+        _.bindAll(this, 'render');
+        this.filterView = new FilterView({
+          collection: this.collection
+        });
+        return this.listView = new CatsListView({
+          collection: this.collection
+        });
+      },
+      render: function() {
+        $(this.el).append("<h2>Categories</h2>");
+        $(this.el).append(this.filterView.render().el);
+        $(this.el).append(this.listView.render().el);
+        return this;
+      }
+    });
+    window.CatsListView = Backbone.View.extend({
+      tagName: "table",
+      className: "table table-striped table-bordered",
+      id: "CatsResults",
+      initialize: function() {
+        _.bindAll(this, 'render');
+        return this.collection.bind("reset", this.render);
+      },
+      render: function() {
+        console.log("render nutr");
+        $(this.el).html("");
+        this.collection.each(function(item) {
+          var cats;
+          cats = new CatsListElementView({
+            model: item
+          });
+          return $("table#CatsResults").append(cats.render().el);
+        });
+        return this;
+      }
+    });
+    return window.CatsListElementView = Backbone.View.extend({
+      template: Utility.create_template("#CatsListViewElement-template"),
+      tagName: "tr",
       initialize: function() {
         return _.bindAll(this, 'render');
       },

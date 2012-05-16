@@ -34,3 +34,33 @@ $ ->
         response.picture = "images/default.png"
       return response
   })
+
+  window.NutritionModel = Backbone.Model.extend({
+    initialize: ->
+      console.log "nutr model init"
+  })
+
+  window.EANModel = Backbone.Model.extend({
+    initialize: ->
+      console.log "ean model init"
+  })
+
+  window.CatModel = Backbone.Model.extend({
+    initialize: ->
+      console.log "cat model init"
+  })
+
+  window.sendNutrModel = Backbone.Model.extend({
+    initialize: ->
+      console.log "sendNutrModel init"
+  })
+
+  window.sendEANModel = Backbone.Model.extend({
+    initialize: ->
+      console.log "sendEANModel init"
+  })
+
+  window.sendCatsModel = Backbone.Model.extend({
+    initialize: ->
+      console.log "sendCatsModel init"
+  })
