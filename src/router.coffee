@@ -4,10 +4,8 @@
 $ ->
   window.Admin = Backbone.Router.extend(
     routes:
-      "": "search"
-      "search_ingr": "search_ingr"
-      "recipe/:id": "recipe"
-      "map/:id": "map"
+      "": "main"
+      "ingredient/:id": "ingr"
 
     initialize: ->
       Backbone.history.start pushState: false
@@ -16,22 +14,19 @@ $ ->
         console.log "back clicked"
         window.history.back()
 
-    search: ->
-      console.log "search sdf"
-      @searchView = new SearchView({ collection: new RecipeSearchCollection() });
+    main: ->
+      console.log "main"
+      @searchView = new SearchView({ collection: new IngredientsCollection() });
 
-      $('#container').html(@searchView.render().el)
+      $('#ingr_list').html(@searchView.render().el)
       #@dashboardView = new DashboardView();
       #$('#main_container').html(@dashboardView.render().el)
 
-    search_ingr: ->
-      console.log "search_ingr"
+    ingr: (id) ->
+      console.log "ingr"+id
 
-    recipe: (id) ->
-      console.log "recipe"+id
-
-      @recipeDetailView = new RecipeDetailView({model: new RecipeDetailModel({id: id})});
-      @recipeDetailView.model.fetch()
+      @recipeDetailView = new IngrDetailView({});
+      #@recipeDetailView.model.fetch()
       $('#container').html(@recipeDetailView.render().el)
 
     map: (id) ->

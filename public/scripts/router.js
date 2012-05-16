@@ -4,10 +4,8 @@
   $(function() {
     return window.Admin = Backbone.Router.extend({
       routes: {
-        "": "search",
-        "search_ingr": "search_ingr",
-        "recipe/:id": "recipe",
-        "map/:id": "map"
+        "": "main",
+        "ingredient/:id": "ingr"
       },
       initialize: function() {
         Backbone.history.start({
@@ -18,24 +16,16 @@
           return window.history.back();
         });
       },
-      search: function() {
-        console.log("search sdf");
+      main: function() {
+        console.log("main");
         this.searchView = new SearchView({
-          collection: new RecipeSearchCollection()
+          collection: new IngredientsCollection()
         });
-        return $('#container').html(this.searchView.render().el);
+        return $('#ingr_list').html(this.searchView.render().el);
       },
-      search_ingr: function() {
-        return console.log("search_ingr");
-      },
-      recipe: function(id) {
-        console.log("recipe" + id);
-        this.recipeDetailView = new RecipeDetailView({
-          model: new RecipeDetailModel({
-            id: id
-          })
-        });
-        this.recipeDetailView.model.fetch();
+      ingr: function(id) {
+        console.log("ingr" + id);
+        this.recipeDetailView = new IngrDetailView({});
         return $('#container').html(this.recipeDetailView.render().el);
       },
       map: function(id) {

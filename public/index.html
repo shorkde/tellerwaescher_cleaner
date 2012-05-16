@@ -27,12 +27,16 @@
 
   </head>
   <body>
-    <div id="container">
+    <div class="row-fluid">
+      <div class="span3" id="ingr_list">
+        TEST
+      </div>
+      <div class="span9" id="container">
 
+      </div>
     </div>
 
     <script type="text/template" id="SearchView-template">
-
       <div id="list_container"></div>
     </script>
 
@@ -44,71 +48,34 @@
           </form>
         </div>
       </div>
-      <ul id="filterNav">
-        <li>
-          <a class="btn btn-large" href="#search_ingr">
-            <img src="images/icons/iconZutaten@2x.png" />
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-large" href="#">
-            <img src="images/icons/iconKategorie@2x.png" />
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-large" href="#">
-            <img src="images/icons/iconPreis@2x.png" />
-          </a>
-        </li>
-      </ul>
     </script>
 
-    <script type="text/template" id="RecipeListViewElement-template">
+    <script type="text/template" id="IngredientListViewElement-template">
       <td class="ResultItem span12">
         <div class="image">
-          <a href="#recipe/{{id}}">
-            <img src="{{picture}}" alt="{{title}}" class="thumbnail" />
-          </a>
+          <img src="{{picture}}" alt="{{title}}" class="thumbnail" />
         </div>
         <div class="info">
-          <a href="#recipe/{{id}}">
-            <h1>{{title}}</h1>
-          </a>
-          <a href="#recipe/{{id}}">
-            <h2>{{#ingredients}}{{title}}, {{/ingredients}}</h2>
-          </a>
+          <h1>{{title}}</h1>
+          <h2>{{#ingredients}}{{title}}, {{/ingredients}}</h2>
         </div>
       </td>
     </script>
 
-    <script type="text/template" id="RecipeDataView-template">
+    <script type="text/template" id="IngredientDetailView-template">
       <div class="row-fluid">
-        <div class="span4 ">
-          <img src="{{picture}}" alt="{{title}}" class="span4 thumbnail marginright15 marginleft0" />
+        <div class="span4" style="background-color: red">
+          <h2>Nährwerte</h2>
         </div>
-        <div class="span7">
-          <h1>{{title}} <small><br />mit {{#ingredients}}{{title}}, {{/ingredients}}</small></h1>
-        </div>
-      </div>
-      <div class="row-fluid margintop15">
-        <h2>Zubereitung Step by Step</h2>
-        <table id="steps" class="table table-bordered table-striped">
-          {{#parts}}
-            {{#.}}
-              {{#items}}
-                <tr>
-                  <td>{{count}})</td>
-                  <td>{{text}}</td>
-                </tr>
-              {{/items}}
-            {{/.}}
-          {{/parts}}
-        </table>
-      </div>
-    </script>
+        <div class="span4" style="background-color: green">
+          <h2>EAN</h2>
 
-    <script type="text/template" id="TopBarView-template">
-      <a id="btn-back" class="btn">back</a>
+        </div>
+        <div class="span4" style="background-color: yellow">
+          <h2>Kategorien</h2>
+
+        </div>
+      </div>
     </script>
   </body>
 </html>

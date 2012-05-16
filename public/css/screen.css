@@ -5339,102 +5339,110 @@ h1 small {
 }
 
 /* line 33, ../../sass/screen.scss */
-#RecipeResults h1 {
+#IngrResults h1 {
   font-size: 1.6em;
   line-height: 1.4em;
 }
 /* line 37, ../../sass/screen.scss */
-#RecipeResults h2 {
+#IngrResults h2 {
   font-size: 1.2em;
   line-height: 1.4em;
   font-weight: normal;
 }
-
+/* line 43, ../../sass/screen.scss */
+#IngrResults .active td {
+  background-color: #C5C5C5;
+}
 /* line 44, ../../sass/screen.scss */
+#IngrResults .active td h1 {
+  color: white;
+}
+
+/* line 50, ../../sass/screen.scss */
 .marginauto {
   margin: auto;
 }
 
-/* line 48, ../../sass/screen.scss */
+/* line 54, ../../sass/screen.scss */
 #FilterView {
   margin-bottom: 20px;
 }
 
-/* line 52, ../../sass/screen.scss */
+/* line 58, ../../sass/screen.scss */
 table#steps {
   margin-top: 20px;
 }
-/* line 54, ../../sass/screen.scss */
+/* line 60, ../../sass/screen.scss */
 table#steps li {
   font-size: 1.4em;
   line-height: 1.8em;
 }
 
-/* line 60, ../../sass/screen.scss */
+/* line 66, ../../sass/screen.scss */
 .thumb_fixed_width {
   width: 120px !important;
 }
 
-/* line 64, ../../sass/screen.scss */
+/* line 70, ../../sass/screen.scss */
 .display_inline {
   display: inline !important;
 }
 
-/* line 68, ../../sass/screen.scss */
+/* line 74, ../../sass/screen.scss */
 ul#filterNav {
   list-style-type: none;
   margin: 0;
 }
-/* line 71, ../../sass/screen.scss */
+/* line 77, ../../sass/screen.scss */
 ul#filterNav li {
   float: left;
   width: 33%;
   text-align: center;
   margin-bottom: 20px;
 }
-/* line 76, ../../sass/screen.scss */
+/* line 82, ../../sass/screen.scss */
 ul#filterNav li img {
   height: 35px;
 }
 
-/* line 81, ../../sass/screen.scss */
+/* line 87, ../../sass/screen.scss */
 .ResultItem .image {
   float: left;
   width: 20%;
 }
-/* line 84, ../../sass/screen.scss */
+/* line 90, ../../sass/screen.scss */
 .ResultItem .image img {
   width: 80%;
   max-width: 120px;
 }
-/* line 89, ../../sass/screen.scss */
+/* line 95, ../../sass/screen.scss */
 .ResultItem .info {
   float: left;
   width: 75%;
   margin-left: 10px;
 }
 
-/* line 96, ../../sass/screen.scss */
+/* line 102, ../../sass/screen.scss */
 .marginleft15 {
   margin-left: 15px !important;
 }
 
-/* line 100, ../../sass/screen.scss */
+/* line 106, ../../sass/screen.scss */
 .marginright15 {
   margin-right: 15px !important;
 }
 
-/* line 104, ../../sass/screen.scss */
+/* line 110, ../../sass/screen.scss */
 .marginleft0 {
   margin-left: 0px !important;
 }
 
-/* line 108, ../../sass/screen.scss */
+/* line 114, ../../sass/screen.scss */
 .margintop15 {
   margin-top: 15px !important;
 }
 
-/* line 112, ../../sass/screen.scss */
+/* line 118, ../../sass/screen.scss */
 #topbar {
   height: 40px;
   width: 100%;
@@ -5444,7 +5452,7 @@ ul#filterNav li img {
   background: grey;
 }
 
-/* line 121, ../../sass/screen.scss */
+/* line 127, ../../sass/screen.scss */
 #recipeData {
   margin-top: 40px;
 }

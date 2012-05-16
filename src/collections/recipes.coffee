@@ -22,10 +22,11 @@ $ ->
 
       return $.ajax(_.extend(params, options));
 
-  window.RecipeSearchCollection = MyBackboneCollection.extend
-    model: RecipeModel
+  window.IngredientsCollection = MyBackboneCollection.extend
+    model: IngredientModel
     query:
       searchstring: ""
       limit: 10
       offset: 0
-    url: "/api/ios/search_recipe/"
+    url: "/api/get_unlinked_ingredients/"
+    type: "GET"

@@ -28,25 +28,21 @@
     window.SearchView = Backbone.View.extend({
       template: Utility.create_template("#SearchView-template"),
       initialize: function() {
-        this.recipeResultView = new RecipeResultView({
-          collection: this.collection
-        });
-        return this.filterView = new FilterView({
+        return this.recipeResultView = new IngrResultView({
           collection: this.collection
         });
       },
       render: function() {
         console.log("search view render");
-        $(this.el).append(this.filterView.render().el);
         $(this.el).append(this.recipeResultView.render().el);
         this.collection.fetch();
         return this;
       }
     });
-    window.RecipeResultView = Backbone.View.extend({
+    window.IngrResultView = Backbone.View.extend({
       tagName: "table",
       className: "table table-striped table-bordered",
-      id: "RecipeResults",
+      id: "IngrResults",
       initialize: function() {
         _.bindAll(this, 'render');
         return this.collection.bind("reset", this.render);
@@ -56,59 +52,43 @@
         this.collection.each(function(item) {
           var ingr;
           console.log("iterate");
-          ingr = new RecipeListElementView({
+          ingr = new IngrListElementView({
             model: item
           });
-          return $("table#RecipeResults").append(ingr.render().el);
+          return $("table#IngrResults").append(ingr.render().el);
         });
         return this;
       }
     });
-    window.RecipeListElementView = Backbone.View.extend({
-      template: Utility.create_template("#RecipeListViewElement-template"),
+    window.IngrListElementView = Backbone.View.extend({
+      template: Utility.create_template("#IngredientListViewElement-template"),
       tagName: "tr",
+      events: {
+        'click': 'showDetails'
+      },
       initialize: function() {
-        return _.bindAll(this, 'render');
+        return _.bindAll(this, 'render', 'showDetails');
       },
       render: function() {
         $(this.el).html(this.template(this.model.toJSON()));
         return this;
-      }
-    });
-    window.RecipeDetailView = Backbone.View.extend({
-      initialize: function() {
-        _.bindAll(this, 'render');
-        this.topBarView = new TopBarView();
-        return this.recipeDataView = new RecipeDataView({
+      },
+      showDetails: function() {
+        $('table#IngrResults tr').removeClass("active");
+        $(this.el).addClass("active");
+        this.recipeDetailView = new IngrDetailView({
           model: this.model
         });
-      },
-      render: function() {
-        $(this.el).append(this.topBarView.render().el);
-        $(this.el).append(this.recipeDataView.render().el);
-        return this;
+        return $('#container').html(this.recipeDetailView.render().el);
       }
     });
-    window.RecipeDataView = Backbone.View.extend({
-      template: Utility.create_template("#RecipeDataView-template"),
-      id: "recipeData",
-      initialize: function() {
-        _.bindAll(this, 'render');
-        return this.model.bind("change", this.render);
-      },
-      render: function() {
-        $(this.el).html(this.template(this.model.toJSON()));
-        return this;
-      }
-    });
-    return window.TopBarView = Backbone.View.extend({
-      template: Utility.create_template("#TopBarView-template"),
-      id: "topbar",
+    return window.IngrDetailView = Backbone.View.extend({
+      template: Utility.create_template("#IngredientDetailView-template"),
       initialize: function() {
         return _.bindAll(this, 'render');
       },
       render: function() {
-        $(this.el).html(this.template(null));
+        $(this.el).html(this.template(this.model.toJSON()));
         return this;
       }
     });
