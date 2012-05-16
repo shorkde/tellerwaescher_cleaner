@@ -2,7 +2,10 @@
 (function() {
 
   $(function() {
-    return window.App = new Admin();
+    window.App = new Admin();
+    return $('form').live("submit", function(e) {
+      return e.preventDefault();
+    });
   });
 
 }).call(this);
