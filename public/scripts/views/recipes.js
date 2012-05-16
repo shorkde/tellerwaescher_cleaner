@@ -32,13 +32,13 @@
     window.SearchView = Backbone.View.extend({
       template: Utility.create_template("#SearchView-template"),
       initialize: function() {
-        return this.recipeResultView = new IngrResultView({
+        return window.ingrResultView = new IngrResultView({
           collection: this.collection
         });
       },
       render: function() {
         console.log("search view render");
-        $(this.el).append(this.recipeResultView.render().el);
+        $(this.el).append(ingrResultView.render().el);
         this.collection.fetch();
         return this;
       }
@@ -270,7 +270,7 @@
       },
       render: function() {
         console.log("render nutr");
-        $(this.el).html("");
+        $(".catItem:not(.selected)", this.el).parent().remove();
         this.collection.each(function(item) {
           var cats;
           cats = new CatsListElementView({
@@ -315,29 +315,22 @@
         return this;
       },
       submit: function() {
-        var eans;
-        if ($('.nutrItem.selected').length > 0 && $('.catItem.selected').length > 0 && $('.eanItem.selected').length > 0) {
-          $('.nutrItem.selected').each(function(index) {
-            this.sendNutr = new sendNutrModel;
-            this.sendNutr.query.nutrition = $(this).attr("data-id");
-            this.sendNutr.query.ingredient = window.currentId;
-            return this.sendNutr.save();
-          });
+        var cats, eans;
+        if ($('.nutrItem.selected').length > 0 && $('.catItem.selected').length > 0) {
+          cats = new Array();
           $('.catItem.selected').each(function(index) {
-            this.sendCats = new sendCatsModel;
-            this.sendCats.query.ingredient_category_id = $(this).attr("data-id");
-            this.sendCats.query.ingredient_id = window.currentId;
-            return this.sendCats.save();
+            return cats.push($(this).attr("data-id"));
           });
           eans = new Array();
           $('.eanItem.selected').each(function(index) {
             return eans.push($(this).attr("data-id"));
           });
-          this.sendEAN = new sendEANModel;
-          this.sendEAN.query.ingredient_id = window.currentId;
-          this.sendEAN.query.eans = eans;
-          this.sendEAN.save();
-          alert("ingredient is clean now.");
+          this.submitModel = new SubmitModel();
+          this.submitModel.query.eans = eans;
+          this.submitModel.query.ingredient_id = window.currentId;
+          this.submitModel.query.ingredient_category_ids = cats;
+          this.submitModel.query.nutrition_id = $('.nutrItem.selected').attr("data-id");
+          this.submitModel.save();
           $('#IngrResults tr.active').next().click();
           return $('#IngrResults tr.active').prev().remove();
         } else {

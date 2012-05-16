@@ -57,34 +57,11 @@
         return console.log("cat model init");
       }
     });
-    window.sendNutrModel = MyBackboneModel.extend({
-      query: {
-        nutrition: "",
-        ingredient: ""
-      },
-      url: "/api/link_ingredient/",
+    return window.SubmitModel = MyBackboneModel.extend({
+      query: {},
+      url: "/api/attach_info_to_ingredient/",
       initialize: function() {
-        return console.log("sendNutrModel init");
-      }
-    });
-    window.sendEANModel = MyBackboneModel.extend({
-      query: {
-        eans: "",
-        ingredient_id: ""
-      },
-      url: "/api/add_eans_to_ingredient/",
-      initialize: function() {
-        return console.log("sendEANModel init");
-      }
-    });
-    return window.sendCatsModel = MyBackboneModel.extend({
-      query: {
-        ingredient_category_id: "",
-        ingredient_id: ""
-      },
-      url: "/api/add_category_to_ingredient/",
-      initialize: function() {
-        return console.log("sendCatsModel init");
+        return console.log("submit model init");
       }
     });
   });

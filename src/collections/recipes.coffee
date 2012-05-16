@@ -26,7 +26,7 @@ $ ->
     model: IngredientModel
     query:
       searchstring: ""
-      limit: 10
+      limit: 20
       offset: 0
     url: "/api/get_unlinked_ingredients/"
     type: "GET"
@@ -35,7 +35,7 @@ $ ->
     model: NutritionModel
     query:
       searchstring: ""
-      limit: 10
+      limit: 20
       offset: 0
     url: "/api/search_ingredient_info/"
 
@@ -43,7 +43,7 @@ $ ->
     model: EANModel
     query:
       searchstring: ""
-      limit: 10
+      limit: 20
       offset: 0
     url: "/api/get_eans/"
 
