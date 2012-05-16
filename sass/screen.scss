@@ -1,0 +1,123 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+//@import "compass/reset";
+@import "compass-bootstrap/_base";
+@import "compass-bootstrap/_responsive";
+
+html, body {
+  //height: 100% !important;
+  margin: 10px;
+}
+
+h1 {
+  font-size: 1.8em;
+  small {
+    font-size: 0.6em;
+    line-height: 0.6em;
+  }
+}
+
+#container {
+  //width: 100%;
+  //margin: auto;
+  //min-height: 100%;
+  //height:auto !important;
+  //height: 100%;
+  //overflow: hidden !important;
+}
+
+#RecipeResults {
+  h1 {
+    font-size: 1.6em;
+    line-height: 1.4em;
+  }
+  h2 {
+    font-size: 1.2em;
+    line-height: 1.4em;
+    font-weight: normal;
+  }
+}
+
+.marginauto {
+  margin:auto;
+}
+
+#FilterView {
+  margin-bottom: 20px;
+}
+
+table#steps {
+  margin-top: 20px;
+  li {
+    font-size: 1.4em;
+    line-height: 1.8em;
+  }
+}
+
+.thumb_fixed_width {
+  width: 120px !important;
+}
+
+.display_inline {
+  display:inline !important;
+}
+
+ul#filterNav {
+  list-style-type: none;
+  margin: 0;
+  li {
+    float: left;
+    width: 33%;
+    text-align: center;
+    margin-bottom: 20px;
+    img { height: 35px; }
+  }
+}
+
+.ResultItem {
+  .image {
+    float: left;
+    width: 20%;
+    img {
+      width: 80%;
+      max-width: 120px;
+    }
+  }
+  .info {
+    float: left;
+    width: 75%;
+    margin-left: 10px;
+  }
+}
+
+.marginleft15 {
+  margin-left: 15px !important;
+}
+
+.marginright15 {
+  margin-right: 15px !important;
+}
+
+.marginleft0 {
+  margin-left: 0px !important;
+}
+
+.margintop15 {
+  margin-top: 15px !important;
+}
+
+#topbar {
+  height: 40px;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: grey;
+}
+
+#recipeData {
+  margin-top: 40px;
+}

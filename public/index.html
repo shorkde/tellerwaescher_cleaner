@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>mobile Recipe Search</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/screen.css" media="all" rel="stylesheet" type="text/css"/>
+    <script src="scripts/assets/jquery.min.js"></script>
+    <script src="scripts/assets/underscore.js"></script>
+    <script src="scripts/assets/mustache.js"></script>
+    <script src="scripts/assets/backbone.js"></script>
+
+    <script src="scripts/utility.js"></script>
+
+    <!-- Models -->
+    <script src="scripts/models/recipes.js"></script>
+
+    <!-- Views -->
+    <script src="scripts/views/recipes.js"></script>
+
+    <!-- Collections -->
+    <script src="scripts/collections/recipes.js"></script>
+
+    <!-- Controller & Main & Utility -->
+    <script src="scripts/router.js"></script>
+    <script src="scripts/main.js"></script>
+
+  </head>
+  <body>
+    <div id="container">
+
+    </div>
+
+    <script type="text/template" id="SearchView-template">
+
+      <div id="list_container"></div>
+    </script>
+
+    <script type="text/template" id="FilterView-template">
+      <div class="row-fluid">
+        <div class="span12">
+          <form class="well form-search">
+            <input id="searchForm" type="text" class="span11 input-medium search-query">
+          </form>
+        </div>
+      </div>
+      <ul id="filterNav">
+        <li>
+          <a class="btn btn-large" href="#search_ingr">
+            <img src="images/icons/iconZutaten@2x.png" />
+          </a>
+        </li>
+        <li>
+          <a class="btn btn-large" href="#">
+            <img src="images/icons/iconKategorie@2x.png" />
+          </a>
+        </li>
+        <li>
+          <a class="btn btn-large" href="#">
+            <img src="images/icons/iconPreis@2x.png" />
+          </a>
+        </li>
+      </ul>
+    </script>
+
+    <script type="text/template" id="RecipeListViewElement-template">
+      <td class="ResultItem span12">
+        <div class="image">
+          <a href="#recipe/{{id}}">
+            <img src="{{picture}}" alt="{{title}}" class="thumbnail" />
+          </a>
+        </div>
+        <div class="info">
+          <a href="#recipe/{{id}}">
+            <h1>{{title}}</h1>
+          </a>
+          <a href="#recipe/{{id}}">
+            <h2>{{#ingredients}}{{title}}, {{/ingredients}}</h2>
+          </a>
+        </div>
+      </td>
+    </script>
+
+    <script type="text/template" id="RecipeDataView-template">
+      <div class="row-fluid">
+        <div class="span4 ">
+          <img src="{{picture}}" alt="{{title}}" class="span4 thumbnail marginright15 marginleft0" />
+        </div>
+        <div class="span7">
+          <h1>{{title}} <small><br />mit {{#ingredients}}{{title}}, {{/ingredients}}</small></h1>
+        </div>
+      </div>
+      <div class="row-fluid margintop15">
+        <h2>Zubereitung Step by Step</h2>
+        <table id="steps" class="table table-bordered table-striped">
+          {{#parts}}
+            {{#.}}
+              {{#items}}
+                <tr>
+                  <td>{{count}})</td>
+                  <td>{{text}}</td>
+                </tr>
+              {{/items}}
+            {{/.}}
+          {{/parts}}
+        </table>
+      </div>
+    </script>
+
+    <script type="text/template" id="TopBarView-template">
+      <a id="btn-back" class="btn">back</a>
+    </script>
+  </body>
+</html>

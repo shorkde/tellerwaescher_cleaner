@@ -1,0 +1,2 @@
+$ ->
+  window.App = new Admin()
