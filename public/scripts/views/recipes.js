@@ -8,7 +8,8 @@
         'keyup input': 'keyLog'
       },
       initialize: function() {
-        return _.bindAll(this, 'render', 'getData', 'keyLog');
+        _.bindAll(this, 'render', 'getData', 'keyLog');
+        return console.log("###", this.value);
       },
       keyLog: function() {
         console.log("keylog");
@@ -22,7 +23,9 @@
         return this.collection.fetch();
       },
       render: function() {
-        $(this.el).html(Mustache.to_html($("#FilterView-template").html(), null));
+        $(this.el).html(Mustache.to_html($("#FilterView-template").html(), {
+          value: window.valueInput
+        }));
         return this;
       }
     });
@@ -96,16 +99,18 @@
         this.CatsListView = new CatsView({
           collection: new CatsCollection()
         });
-        this.sendNutr = new sendNutrModel;
-        this.sendEAN = new sendEANModel;
-        return this.sendCats = new sendCatsModel;
+        this.submitButtonView = new SubmitButtonView;
+        window.valueInput = this.model.get("title");
+        return window.currentId = this.model.get("id");
       },
       render: function() {
         $(this.el).append(this.nutritionListView.render().el);
         $(this.el).append(this.EANListView.render().el);
         $(this.el).append(this.CatsListView.render().el);
+        $(this.el).append(this.submitButtonView.render().el);
         this.nutritionListView.collection.query.searchstring = this.model.get("title");
         this.EANListView.collection.query.searchstring = this.model.get("title");
+        this.CatsListView.collection.query.searchstring = "";
         this.nutritionListView.collection.fetch();
         this.EANListView.collection.fetch();
         this.CatsListView.collection.fetch();
@@ -141,7 +146,7 @@
       },
       render: function() {
         console.log("render nutr");
-        $(this.el).html("");
+        $(".nutrItem:not(.selected)", this.el).parent().remove();
         this.collection.each(function(item) {
           var nutrition;
           nutrition = new NutritionsListElementView({
@@ -155,12 +160,23 @@
     window.NutritionsListElementView = Backbone.View.extend({
       template: Utility.create_template("#NutritionsListViewElement-template"),
       tagName: "tr",
+      events: {
+        "click": "mark"
+      },
       initialize: function() {
         return _.bindAll(this, 'render');
       },
       render: function() {
         $(this.el).html(this.template(this.model.toJSON()));
         return this;
+      },
+      mark: function() {
+        $(".nutrItem.selected").removeClass("selected");
+        if ($(".nutrItem", this.el).hasClass("selected")) {
+          return $(".nutrItem", this.el).removeClass("selected");
+        } else {
+          return $(".nutrItem", this.el).addClass("selected");
+        }
       }
     });
     window.EANView = Backbone.View.extend({
@@ -192,7 +208,7 @@
       },
       render: function() {
         console.log("render nutr");
-        $(this.el).html("");
+        $(".eanItem:not(.selected)", this.el).parent().remove();
         this.collection.each(function(item) {
           var ean;
           ean = new EANListElementView({
@@ -206,12 +222,22 @@
     window.EANListElementView = Backbone.View.extend({
       template: Utility.create_template("#EANListViewElement-template"),
       tagName: "tr",
+      events: {
+        "click": "mark"
+      },
       initialize: function() {
-        return _.bindAll(this, 'render');
+        return _.bindAll(this, 'render', 'mark');
       },
       render: function() {
         $(this.el).html(this.template(this.model.toJSON()));
         return this;
+      },
+      mark: function() {
+        if ($(".eanItem", this.el).hasClass("selected")) {
+          return $(".eanItem", this.el).removeClass("selected");
+        } else {
+          return $(".eanItem", this.el).addClass("selected");
+        }
       }
     });
     window.CatsView = Backbone.View.extend({
@@ -220,7 +246,8 @@
       initialize: function() {
         _.bindAll(this, 'render');
         this.filterView = new FilterView({
-          collection: this.collection
+          collection: this.collection,
+          value: this.value
         });
         return this.listView = new CatsListView({
           collection: this.collection
@@ -254,15 +281,68 @@
         return this;
       }
     });
-    return window.CatsListElementView = Backbone.View.extend({
+    window.CatsListElementView = Backbone.View.extend({
       template: Utility.create_template("#CatsListViewElement-template"),
       tagName: "tr",
+      events: {
+        "click": "mark"
+      },
       initialize: function() {
-        return _.bindAll(this, 'render');
+        return _.bindAll(this, 'render', 'mark');
       },
       render: function() {
         $(this.el).html(this.template(this.model.toJSON()));
         return this;
+      },
+      mark: function() {
+        if ($(".catItem", this.el).hasClass("selected")) {
+          return $(".catItem", this.el).removeClass("selected");
+        } else {
+          return $(".catItem", this.el).addClass("selected");
+        }
+      }
+    });
+    return window.SubmitButtonView = Backbone.View.extend({
+      id: "submitButton",
+      events: {
+        'click': 'submit'
+      },
+      initialize: function() {
+        return _.bindAll(this, 'render', 'submit');
+      },
+      render: function() {
+        $(this.el).html("Submit");
+        return this;
+      },
+      submit: function() {
+        var eans;
+        if ($('.nutrItem.selected').length > 0 && $('.catItem.selected').length > 0 && $('.eanItem.selected').length > 0) {
+          $('.nutrItem.selected').each(function(index) {
+            this.sendNutr = new sendNutrModel;
+            this.sendNutr.query.nutrition = $(this).attr("data-id");
+            this.sendNutr.query.ingredient = window.currentId;
+            return this.sendNutr.save();
+          });
+          $('.catItem.selected').each(function(index) {
+            this.sendCats = new sendCatsModel;
+            this.sendCats.query.ingredient_category_id = $(this).attr("data-id");
+            this.sendCats.query.ingredient_id = window.currentId;
+            return this.sendCats.save();
+          });
+          eans = new Array();
+          $('.eanItem.selected').each(function(index) {
+            return eans.push($(this).attr("data-id"));
+          });
+          this.sendEAN = new sendEANModel;
+          this.sendEAN.query.ingredient_id = window.currentId;
+          this.sendEAN.query.eans = eans;
+          this.sendEAN.save();
+          alert("ingredient is clean now.");
+          $('#IngrResults tr.active').next().click();
+          return $('#IngrResults tr.active').prev().remove();
+        } else {
+          return alert("Bitte alles auswählen");
+        }
       }
     });
   });

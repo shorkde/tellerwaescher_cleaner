@@ -50,17 +50,29 @@ $ ->
       console.log "cat model init"
   })
 
-  window.sendNutrModel = Backbone.Model.extend({
+  window.sendNutrModel = MyBackboneModel.extend({
+    query:
+      nutrition: ""
+      ingredient: ""
+    url: "/api/link_ingredient/"
     initialize: ->
       console.log "sendNutrModel init"
   })
 
-  window.sendEANModel = Backbone.Model.extend({
+  window.sendEANModel = MyBackboneModel.extend({
+    query:
+      eans: ""
+      ingredient_id: ""
+    url: "/api/add_eans_to_ingredient/"
     initialize: ->
       console.log "sendEANModel init"
   })
 
-  window.sendCatsModel = Backbone.Model.extend({
+  window.sendCatsModel = MyBackboneModel.extend({
+    query:
+      ingredient_category_id: ""
+      ingredient_id: ""
+    url: "/api/add_category_to_ingredient/"
     initialize: ->
       console.log "sendCatsModel init"
   })

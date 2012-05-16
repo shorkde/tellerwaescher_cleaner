@@ -5,7 +5,7 @@ $ ->
       'keyup input':'keyLog'
     initialize: ->
       _.bindAll(this, 'render', 'getData', 'keyLog');
-
+      console.log "###", @value
     keyLog: ->
       console.log "keylog"
       if typeof @keyTimeout != "undefined"
@@ -17,7 +17,7 @@ $ ->
       @collection.fetch()
 
     render: ->
-      $(@el).html Mustache.to_html $("#FilterView-template").html(), null
+      $(@el).html Mustache.to_html $("#FilterView-template").html(), { value: window.valueInput }
 
       return @
   })
@@ -82,18 +82,19 @@ $ ->
       @nutritionListView = new NutritionsView({ collection : new NutritionsCollection() })
       @EANListView = new EANView({ collection : new EANCollection() })
       @CatsListView = new CatsView({ collection : new CatsCollection() })
-
-      @sendNutr = new sendNutrModel
-      @sendEAN = new sendEANModel
-      @sendCats = new sendCatsModel
+      @submitButtonView = new SubmitButtonView
+      window.valueInput = @model.get("title")
+      window.currentId = @model.get("id")
 
     render: ->
       $(@el).append @nutritionListView.render().el
       $(@el).append @EANListView.render().el
       $(@el).append @CatsListView.render().el
+      $(@el).append @submitButtonView.render().el
 
       @nutritionListView.collection.query.searchstring = @model.get("title")
       @EANListView.collection.query.searchstring = @model.get("title")
+      @CatsListView.collection.query.searchstring = ""
 
       @nutritionListView.collection.fetch()
       @EANListView.collection.fetch()
@@ -128,7 +129,7 @@ $ ->
       @collection.bind "reset", @render
     render: ->
       console.log "render nutr"
-      $(@el).html("")
+      $(".nutrItem:not(.selected)", @el).parent().remove()
       @collection.each (item) ->
         nutrition = new NutritionsListElementView(model: item)
         $("table#NutritionsResults").append nutrition.render().el
@@ -139,6 +140,8 @@ $ ->
   window.NutritionsListElementView = Backbone.View.extend({
     template: Utility.create_template("#NutritionsListViewElement-template")
     tagName: "tr"
+    events:
+      "click":"mark"
     initialize: ->
       _.bindAll(this, 'render');
 
@@ -146,6 +149,13 @@ $ ->
       $(@el).html @template(@model.toJSON())
 
       return @
+
+    mark: ->
+      $(".nutrItem.selected").removeClass "selected"
+      if $(".nutrItem", @el).hasClass "selected"
+        $(".nutrItem", @el).removeClass "selected"
+      else
+        $(".nutrItem", @el).addClass "selected"
   })
 
   window.EANView = Backbone.View.extend({
@@ -173,7 +183,7 @@ $ ->
       @collection.bind "reset", @render
     render: ->
       console.log "render nutr"
-      $(@el).html("")
+      $(".eanItem:not(.selected)", @el).parent().remove()
       @collection.each (item) ->
         ean = new EANListElementView(model: item)
         $("table#EANResults").append ean.render().el
@@ -184,13 +194,21 @@ $ ->
   window.EANListElementView = Backbone.View.extend({
     template: Utility.create_template("#EANListViewElement-template")
     tagName: "tr"
+    events:
+      "click":"mark"
     initialize: ->
-      _.bindAll(this, 'render');
+      _.bindAll(this, 'render', 'mark');
 
     render: ->
       $(@el).html @template(@model.toJSON())
 
       return @
+
+    mark: ->
+      if $(".eanItem", @el).hasClass "selected"
+        $(".eanItem", @el).removeClass "selected"
+      else
+        $(".eanItem", @el).addClass "selected"
   })
 
 
@@ -200,7 +218,7 @@ $ ->
     initialize: ->
       _.bindAll(this, 'render');
 
-      @filterView = new FilterView collection: @collection
+      @filterView = new FilterView({collection: @collection, value: @value})
       @listView = new CatsListView collection: @collection
     render: ->
       $(@el).append "<h2>Categories</h2>"
@@ -230,11 +248,66 @@ $ ->
   window.CatsListElementView = Backbone.View.extend({
     template: Utility.create_template("#CatsListViewElement-template")
     tagName: "tr"
+    events:
+      "click":"mark"
     initialize: ->
-      _.bindAll(this, 'render');
+      _.bindAll(this, 'render', 'mark');
 
     render: ->
       $(@el).html @template(@model.toJSON())
 
       return @
+
+    mark: ->
+      if $(".catItem", @el).hasClass "selected"
+        $(".catItem", @el).removeClass "selected"
+      else
+        $(".catItem", @el).addClass "selected"
+  })
+
+  window.SubmitButtonView = Backbone.View.extend({
+    id: "submitButton"
+
+    events:
+      'click':'submit'
+
+    initialize: ->
+      _.bindAll(this, 'render', 'submit');
+
+    render: ->
+      $(@el).html "Submit"
+
+      return @
+
+    submit: ->
+      #nutritionitems
+      if $('.nutrItem.selected').length > 0 && $('.catItem.selected').length > 0 && $('.eanItem.selected').length > 0
+
+        $('.nutrItem.selected').each (index) ->
+          @sendNutr = new sendNutrModel
+          @sendNutr.query.nutrition = $(this).attr("data-id")
+          @sendNutr.query.ingredient = window.currentId;
+          @sendNutr.save()
+
+        $('.catItem.selected').each (index) ->
+          @sendCats = new sendCatsModel
+          @sendCats.query.ingredient_category_id = $(this).attr("data-id")
+          @sendCats.query.ingredient_id = window.currentId;
+          @sendCats.save()
+
+        eans = new Array()
+        $('.eanItem.selected').each (index) ->
+          eans.push $(this).attr("data-id")
+
+        @sendEAN = new sendEANModel
+        @sendEAN.query.ingredient_id = window.currentId
+        @sendEAN.query.eans = eans
+        @sendEAN.save()
+
+        alert "ingredient is clean now."
+
+        $('#IngrResults tr.active').next().click()
+        $('#IngrResults tr.active').prev().remove()
+      else
+        alert "Bitte alles auswählen"
   })

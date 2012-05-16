@@ -5338,111 +5338,126 @@ h1 small {
   line-height: 0.6em;
 }
 
-/* line 33, ../../sass/screen.scss */
-#IngrResults h1 {
-  font-size: 1.6em;
+/* line 31, ../../sass/screen.scss */
+h1 {
+  font-size: 1.4em;
   line-height: 1.4em;
 }
-/* line 37, ../../sass/screen.scss */
+
+/* line 36, ../../sass/screen.scss */
+td {
+  cursor: pointer;
+}
+
+/* line 41, ../../sass/screen.scss */
 #IngrResults h2 {
   font-size: 1.2em;
   line-height: 1.4em;
   font-weight: normal;
 }
-/* line 43, ../../sass/screen.scss */
+/* line 47, ../../sass/screen.scss */
 #IngrResults .active td {
   background-color: #C5C5C5;
 }
-/* line 44, ../../sass/screen.scss */
+/* line 48, ../../sass/screen.scss */
 #IngrResults .active td h1 {
   color: white;
 }
 
-/* line 50, ../../sass/screen.scss */
+/* line 56, ../../sass/screen.scss */
+td.selected {
+  background-color: #C5C5C5 !important;
+}
+/* line 57, ../../sass/screen.scss */
+td.selected h1 {
+  color: white;
+}
+
+/* line 63, ../../sass/screen.scss */
 .marginauto {
   margin: auto;
 }
 
-/* line 54, ../../sass/screen.scss */
+/* line 67, ../../sass/screen.scss */
 #FilterView {
   margin-bottom: 20px;
 }
 
-/* line 58, ../../sass/screen.scss */
+/* line 71, ../../sass/screen.scss */
 table#steps {
   margin-top: 20px;
 }
-/* line 60, ../../sass/screen.scss */
+/* line 73, ../../sass/screen.scss */
 table#steps li {
   font-size: 1.4em;
   line-height: 1.8em;
 }
 
-/* line 66, ../../sass/screen.scss */
+/* line 79, ../../sass/screen.scss */
 .thumb_fixed_width {
   width: 120px !important;
 }
 
-/* line 70, ../../sass/screen.scss */
+/* line 83, ../../sass/screen.scss */
 .display_inline {
   display: inline !important;
 }
 
-/* line 74, ../../sass/screen.scss */
+/* line 87, ../../sass/screen.scss */
 ul#filterNav {
   list-style-type: none;
   margin: 0;
 }
-/* line 77, ../../sass/screen.scss */
+/* line 90, ../../sass/screen.scss */
 ul#filterNav li {
   float: left;
   width: 33%;
   text-align: center;
   margin-bottom: 20px;
 }
-/* line 82, ../../sass/screen.scss */
+/* line 95, ../../sass/screen.scss */
 ul#filterNav li img {
   height: 35px;
 }
 
-/* line 87, ../../sass/screen.scss */
+/* line 100, ../../sass/screen.scss */
 .ResultItem .image {
   float: left;
   width: 20%;
 }
-/* line 90, ../../sass/screen.scss */
+/* line 103, ../../sass/screen.scss */
 .ResultItem .image img {
   width: 80%;
   max-width: 120px;
 }
-/* line 95, ../../sass/screen.scss */
+/* line 108, ../../sass/screen.scss */
 .ResultItem .info {
   float: left;
   width: 75%;
   margin-left: 10px;
 }
 
-/* line 102, ../../sass/screen.scss */
+/* line 115, ../../sass/screen.scss */
 .marginleft15 {
   margin-left: 15px !important;
 }
 
-/* line 106, ../../sass/screen.scss */
+/* line 119, ../../sass/screen.scss */
 .marginright15 {
   margin-right: 15px !important;
 }
 
-/* line 110, ../../sass/screen.scss */
+/* line 123, ../../sass/screen.scss */
 .marginleft0 {
   margin-left: 0px !important;
 }
 
-/* line 114, ../../sass/screen.scss */
+/* line 127, ../../sass/screen.scss */
 .margintop15 {
   margin-top: 15px !important;
 }
 
-/* line 118, ../../sass/screen.scss */
+/* line 131, ../../sass/screen.scss */
 #topbar {
   height: 40px;
   width: 100%;
@@ -5452,7 +5467,21 @@ ul#filterNav li img {
   background: grey;
 }
 
-/* line 127, ../../sass/screen.scss */
+/* line 140, ../../sass/screen.scss */
 #recipeData {
   margin-top: 40px;
+}
+
+/* line 144, ../../sass/screen.scss */
+#submitButton {
+  cursor: pointer;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding: 15px;
+  width: 170px;
+  height: 50px;
+  font-size: 2.0em;
+  color: white;
+  background-color: green;
 }

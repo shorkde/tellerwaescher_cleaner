@@ -51,8 +51,11 @@ $ ->
     model: CatModel
     query:
       searchstring: ""
-      limit: 10
-      offset: 0
-    url: "/api/get_ingredient_categories/"
-    type: "GET"
+    url: ->
+      if @query.searchstring.length > 0
+        @type = "POST"
+        return "/api/search_ingredient_categories/"
+      else
+        @type = "GET"
+        return "/api/get_ingredient_categories/"
 

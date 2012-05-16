@@ -28,12 +28,16 @@ h1 {
   //height: 100%;
   //overflow: hidden !important;
 }
+h1 {
+  font-size: 1.4em;
+  line-height: 1.4em;
+}
+
+td {
+  cursor: pointer;
+}
 
 #IngrResults {
-  h1 {
-    font-size: 1.6em;
-    line-height: 1.4em;
-  }
   h2 {
     font-size: 1.2em;
     line-height: 1.4em;
@@ -41,10 +45,19 @@ h1 {
   }
   .active {
     td {
-      h1 {color: white;}
+      h1 {
+        color: white;
+      }
       background-color: #C5C5C5;
     }
   }
+}
+
+td.selected {
+  h1 {
+    color: white;
+  }
+  background-color: #C5C5C5 !important;
 }
 
 .marginauto {
@@ -126,4 +139,17 @@ ul#filterNav {
 
 #recipeData {
   margin-top: 40px;
+}
+
+#submitButton {
+  cursor: pointer;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding: 15px;
+  width: 170px;
+  height: 50px;
+  font-size: 2.0em;
+  color: white;
+  background-color: green;
 }

@@ -44,7 +44,7 @@
       <div class="row-fluid">
         <div class="span12">
           <form class="well form-search">
-            <input id="searchForm" type="text" class="span11 input-medium search-query">
+            <input id="searchForm" type="text" class="span11 input-medium search-query" value="{{value}}">
           </form>
         </div>
       </div>
@@ -79,19 +79,19 @@
     </script>
 
     <script type="text/template" id="NutritionsListViewElement-template">
-      <td class="ResultItem span12" data-id="{{id}}">
+      <td class="nutrItem span12" data-id="{{id}}">
         <h1>{{name}}</h1>
       </td>
     </script>
 
     <script type="text/template" id="EANListViewElement-template">
-      <td class="ResultItem span12" data-id="{{id}}">
+      <td class="eanItem span12" data-id="{{id}}">
         <h1>{{name}}</h1>
       </td>
     </script>
 
     <script type="text/template" id="CatsListViewElement-template">
-      <td class="ResultItem span12" data-id="{{id}}">
+      <td class="catItem span12" data-id="{{id}}">
         <h1>{{name}}</h1>
       </td>
     </script>

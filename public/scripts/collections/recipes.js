@@ -59,12 +59,17 @@
     return window.CatsCollection = MyBackboneCollection.extend({
       model: CatModel,
       query: {
-        searchstring: "",
-        limit: 10,
-        offset: 0
+        searchstring: ""
       },
-      url: "/api/get_ingredient_categories/",
-      type: "GET"
+      url: function() {
+        if (this.query.searchstring.length > 0) {
+          this.type = "POST";
+          return "/api/search_ingredient_categories/";
+        } else {
+          this.type = "GET";
+          return "/api/get_ingredient_categories/";
+        }
+      }
     });
   });
 
