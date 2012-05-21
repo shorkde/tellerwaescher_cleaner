@@ -187,13 +187,17 @@
         this.filterView = new FilterView({
           collection: this.collection
         });
-        return this.listView = new EANListView({
+        this.listView = new EANListView({
           collection: this.collection
         });
+        this.selectAllView = new SelectAllButtonView;
+        return this.deselectAllView = new DeselectAllButtonView;
       },
       render: function() {
         $(this.el).append("<h2>EAN</h2>");
         $(this.el).append(this.filterView.render().el);
+        $(this.el).append(this.selectAllView.render().el);
+        $(this.el).append(this.deselectAllView.render().el);
         $(this.el).append(this.listView.render().el);
         return this;
       }
@@ -302,7 +306,7 @@
         }
       }
     });
-    return window.SubmitButtonView = Backbone.View.extend({
+    window.SubmitButtonView = Backbone.View.extend({
       id: "submitButton",
       events: {
         'click': 'submit'
@@ -336,6 +340,40 @@
         } else {
           return alert("Bitte alles auswählen");
         }
+      }
+    });
+    window.SelectAllButtonView = Backbone.View.extend({
+      tagName: "a",
+      className: 'selectAll btn',
+      events: {
+        'click': 'selectAll'
+      },
+      initialize: function() {
+        return _.bindAll(this, 'render', 'selectAll');
+      },
+      render: function() {
+        $(this.el).html("all");
+        return this;
+      },
+      selectAll: function() {
+        return $('.eanItem').addClass("selected");
+      }
+    });
+    return window.DeselectAllButtonView = Backbone.View.extend({
+      tagName: "a",
+      className: 'selectAll btn',
+      events: {
+        'click': 'deselectAll'
+      },
+      initialize: function() {
+        return _.bindAll(this, 'render', 'deselectAll');
+      },
+      render: function() {
+        $(this.el).html("none");
+        return this;
+      },
+      deselectAll: function() {
+        return $('.eanItem').removeClass("selected");
       }
     });
   });

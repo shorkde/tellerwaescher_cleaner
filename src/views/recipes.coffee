@@ -166,9 +166,13 @@ $ ->
 
       @filterView = new FilterView collection: @collection
       @listView = new EANListView collection: @collection
+      @selectAllView = new SelectAllButtonView
+      @deselectAllView = new DeselectAllButtonView
     render: ->
       $(@el).append "<h2>EAN</h2>"
       $(@el).append @filterView.render().el
+      $(@el).append @selectAllView.render().el
+      $(@el).append @deselectAllView.render().el
       $(@el).append @listView.render().el
 
       return @
@@ -302,4 +306,42 @@ $ ->
         $('#IngrResults tr.active').prev().remove()
       else
         alert "Bitte alles auswählen"
+  })
+
+  window.SelectAllButtonView = Backbone.View.extend({
+    tagName: "a"
+    className: 'selectAll btn'
+    events:
+      'click':'selectAll'
+
+    initialize: ->
+      _.bindAll(this, 'render', 'selectAll');
+
+    render: ->
+      $(@el).html "all"
+
+      return @
+
+    selectAll: ->
+      $('.eanItem').addClass("selected")
+
+  })
+
+  window.DeselectAllButtonView = Backbone.View.extend({
+    tagName: "a"
+    className: 'selectAll btn'
+    events:
+      'click':'deselectAll'
+
+    initialize: ->
+      _.bindAll(this, 'render', 'deselectAll');
+
+    render: ->
+      $(@el).html "none"
+
+      return @
+
+    deselectAll: ->
+      $('.eanItem').removeClass("selected")
+
   })
